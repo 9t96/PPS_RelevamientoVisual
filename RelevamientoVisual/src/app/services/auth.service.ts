@@ -3,6 +3,7 @@ import { auth } from 'firebase/app';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import {User} from '../shared/clases/user'
 
 
 @Injectable({
@@ -31,12 +32,12 @@ export class AuthService {
 
   // Login in with email/password
   SignIn(email, password) {
-    return this.ngFireAuth.auth.signInWithEmailAndPassword(email, password);
+    return this.ngFireAuth.signInWithEmailAndPassword(email, password);
   }
 
   // Register user with email/password
   RegisterUser(email, password) {
-    return this.ngFireAuth.auth.createUserWithEmailAndPassword(email, password);
+    return this.ngFireAuth.createUserWithEmailAndPassword(email, password);
   }
 
   // Email verification when new user register
@@ -48,7 +49,7 @@ export class AuthService {
 
   // Recover password
   PasswordRecover(passwordResetEmail) {
-    return this.ngFireAuth.auth
+    return this.ngFireAuth
       .sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
         window.alert(
@@ -79,7 +80,7 @@ export class AuthService {
 
   // Auth providers
   AuthLogin(provider) {
-    return this.ngFireAuth.auth
+    return this.ngFireAuth
       .signInWithPopup(provider)
       .then(result => {
         this.ngZone.run(() => {
@@ -111,7 +112,7 @@ export class AuthService {
 
   // Sign-out
   SignOut() {
-    return this.ngFireAuth.auth.signOut().then(() => {
+    return this.ngFireAuth.signOut().then(() => {
       localStorage.removeItem("user");
       this.router.navigate(["login"]);
     });
