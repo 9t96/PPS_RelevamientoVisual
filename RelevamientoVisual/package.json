@@ -20,6 +20,7 @@
     "@angular/platform-browser": "~11.2.5",
     "@angular/platform-browser-dynamic": "~11.2.5",
     "@angular/router": "~11.2.5",
+    "@capacitor/android": "^2.4.7",
     "@capacitor/core": "2.0.0",
     "@ionic-native/core": "^5.31.1",
     "@ionic-native/firebase": "^5.31.1",

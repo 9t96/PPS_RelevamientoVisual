@@ -40,12 +40,12 @@ export class AuthService {
     return this.ngFireAuth.createUserWithEmailAndPassword(email, password);
   }
 
-  // Email verification when new user register
+/*   // Email verification when new user register
   SendVerificationMail() {
     return this.ngFireAuth.auth.currentUser.sendEmailVerification().then(() => {
       this.router.navigate(["verify-email"]);
     });
-  }
+  } */
 
   // Recover password
   PasswordRecover(passwordResetEmail) {

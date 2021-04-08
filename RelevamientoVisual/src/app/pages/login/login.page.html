@@ -1,38 +1,85 @@
-<ion-content >
-  <ion-text color="primary" >
-    <h2 class="title">Bienvenidos</h2>
-  </ion-text>
-  <form [formGroup]="loginForm">
-    <ion-item lines="full">
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="text" formControlName="email" required></ion-input>
-    </ion-item>
+<ion-content>
+  <div style="display: flex; flex-direction: column; padding: 0 10px 0 10px">
+    <img
+      src="../../../assets/iconapp.svg"
+      alt=""
+      style="width: 200px; align-self: center"
+    />
+    <form [formGroup]="loginForm">
+      <div class="wrap-input">
+        <input
+          type="email"
+          formControlName="email"
+          required
+          size=""
+          name="email"
+          placeholder="Email"
+        />
+      </div>
+      <ion-row class="hiddenItems">
+        <small
+          *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)"
+          style="color: var(--ion-color-danger)"
+          >Por favor, ingrese su email.</small
+        >
+        <small
+          *ngIf="loginForm.get('email').hasError('email')"
+          style="color: var(--ion-color-danger)"
+          >Ingrese un correo valido.</small
+        >
+      </ion-row>
 
-    <ion-item lines="full">
-      <ion-label position="floating">Contaseña</ion-label>
-      <ion-input type="password" required formControlName="password"></ion-input>
-    </ion-item>
+      <div class="wrap-input">
+        <input
+          type="password"
+          class="form-control"
+          required
+          formControlName="password"
+          name="password"
+          placeholder="Contraseña"
+        />
+      </div>
 
-
-  </form>
-  <ion-row>
-    <ion-col>
-      <ion-button (click)="Login()" type="submit" color="primary" expand="block"  [disabled]="!loginForm.valid">Ingresar</ion-button>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-button (click)="testUser(1)" color="success" expand="block">
-        Test User 1 
-      </ion-button>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-button (click)="testUser(2)" color="warning" expand="block">
-        Test User 2
-      </ion-button>
-    </ion-col>
-  </ion-row>
+      <ion-row class="hiddenItems">
+        <small
+          *ngIf="loginForm.get('password').hasError('required') && (loginForm.get('password').dirty || loginForm.get('password').touched)"
+          style="color: var(--ion-color-danger)"
+          [ngClass]="loginForm.get('password').hasError('required') && loginForm.get('password').touched ? 'visible' : 'hidden'"
+          >Por favor, ingrese una constraseña.</small
+        >
+        <small
+          *ngIf="loginForm.get('password').hasError('maxlength') && (loginForm.get('password').dirty || loginForm.get('password').touched)"
+          [ngClass]="loginForm.get('password').hasError('maxlength') && loginForm.get('password').touched ? 'visible' : 'hidden'"
+          style="color: var(--ion-color-danger)"
+          >La contraseña no debe contener mas de 6 caracteres.</small
+        >
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button
+            (click)="Login()"
+            type="submit"
+            color="dark"
+            expand="block"
+            [disabled]="!loginForm.valid"
+            >Ingresar</ion-button
+          >
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button (click)="testUser(1)" color="success" expand="block">
+            Test User 1
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button (click)="testUser(2)" color="warning" expand="block">
+            Test User 2
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
 </ion-content>
-

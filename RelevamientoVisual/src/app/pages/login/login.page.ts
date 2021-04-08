@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { ToastController } from '@ionic/angular';
 
 class User{
   email:string;
@@ -15,16 +16,21 @@ class User{
 export class LoginPage implements OnInit {
 
   user: User;
-  loginForm = this.fromBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
-  })
-  constructor(private authService: AuthService, private router: Router, private fromBuilder: FormBuilder) { 
+  public loginForm: FormGroup;
+
+  constructor(private authService: AuthService, private router: Router, private fromBuilder: FormBuilder, public toastController: ToastController) { 
     this.user = new User();
   }
 
+  get name() { return this.loginForm.get('email'); }
+
+  get power() { return this.loginForm.get('password'); }
+
   ngOnInit() {
-    
+      this.loginForm = this.fromBuilder.group({
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      password: ['', Validators.compose([Validators.required, Validators.maxLength(6)])]
+  })
   }
 
 
@@ -36,7 +42,7 @@ export class LoginPage implements OnInit {
       this.router.navigate(['home']);
     })
     .catch( err =>{ 
-      console.log(err);
+      err.code == "auth/wrong-password" ? this.presentToast("Uno o mas campos son invalidos...") : this.presentToast("Ha ocurrido un error vuelva a intentar.")
     })
   }
 
@@ -52,5 +58,14 @@ export class LoginPage implements OnInit {
         break;
     }
     
+  }
+
+  async presentToast(message) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3000,
+      cssClass: 'toast-danger'
+    });
+    toast.present();
   }
 }

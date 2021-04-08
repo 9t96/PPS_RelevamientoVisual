@@ -20,13 +20,15 @@ import { environment } from 'src/environments/environment';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule,     AngularFireModule.initializeApp(environment.firebaseConfig),
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig), 
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFirestoreModule,],
   providers: [
     StatusBar,
     SplashScreen,
+    ReactiveFormsModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AngularFirestoreModule
   ],
