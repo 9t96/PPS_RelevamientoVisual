@@ -39,7 +39,7 @@ export class LoginPage implements OnInit {
     this.user.email = this.loginForm.get('email').value;
     this.user.password = this.loginForm.get('password').value;
     this.authService.SignIn(this.user.email, this.user.password).then( res =>{
-      this.router.navigate(['home']);
+      this.router.navigate(['tabs']);
     })
     .catch( err =>{ 
       err.code == "auth/wrong-password" ? this.presentToast("Uno o mas campos son invalidos...") : this.presentToast("Ha ocurrido un error vuelva a intentar.")
@@ -55,6 +55,18 @@ export class LoginPage implements OnInit {
       case 2:
         this.loginForm.controls['email'].setValue('invitado@invitado.com') 
         this.loginForm.controls['password'].setValue('222222')
+        break;
+      case 3:
+        this.loginForm.controls['email'].setValue('usuario@usuario.com') 
+        this.loginForm.controls['password'].setValue('333333')
+        break;
+      case 4:
+        this.loginForm.controls['email'].setValue('anonimo@anonimo.com') 
+        this.loginForm.controls['password'].setValue('444444')
+        break;
+      case 5:
+        this.loginForm.controls['email'].setValue('tester@tester.com') 
+        this.loginForm.controls['password'].setValue('555555')
         break;
     }
     

@@ -4,6 +4,9 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import {User} from '../shared/clases/user'
+import { Observable, of } from 'rxjs';
+import { first, switchMap } from 'rxjs/operators';
+import { UserProfile } from '../shared/clases/userProfile';
 
 
 @Injectable({
@@ -11,6 +14,7 @@ import {User} from '../shared/clases/user'
 })
 export class AuthService {
   userData: any;
+  user$: Observable<User>;
 
   constructor(
     public afStore: AngularFirestore,
@@ -18,16 +22,14 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone
   ) {
-    this.ngFireAuth.authState.subscribe(user => {
-      if (user) {
-        this.userData = user;
-        localStorage.setItem("user", JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem("user"));
-      } else {
-        localStorage.setItem("user", null);
-        JSON.parse(localStorage.getItem("user"));
-      }
-    });
+    this.user$ = this.ngFireAuth.authState.pipe(
+      switchMap((user) => {
+        if (user) {
+          return this.afStore.doc(`usersProfile/${user.uid}`).valueChanges();
+        }
+        return of(null);
+      })
+    );
   }
 
   // Login in with email/password
@@ -117,5 +119,13 @@ export class AuthService {
       this.router.navigate(["login"]);
     });
   }
- 
+
+  getCurrentUserId(): Observable<User> {
+    return this.ngFireAuth.authState.pipe(first());
+  }
+
+  getCurrentName(uid:string){
+    return this.afStore.collection("usersProfile").doc<UserProfile>(uid).valueChanges();
+  }
+  
 }

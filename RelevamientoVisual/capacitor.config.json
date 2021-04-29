@@ -1,8 +1,12 @@
 {
-  "appId": "io.ionic.PruebaApp",
-  "appName": "PruebaApp",
+  "appId": "relevamiento.visual",
+  "appName": "Relevamiento Visual",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
-  "cordova": {}
+  "cordova": {},
+  "server": {
+    "url": "http://192.168.0.6:8100",
+    "cleartext": true
+  }
 }

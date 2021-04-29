@@ -1,17 +1,22 @@
-import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { ReportService } from 'src/app/services/report/report.service';
+import { Reporte } from 'src/app/shared/reporte';
 
 @Component({
   selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
-  constructor(private authSrv: AuthService) {}
+  public reports: Reporte[];
 
-  logout(){
-    this.authSrv.SignOut();
+  constructor(public reportSrv: ReportService) { }
+
+  ngOnInit() {
+    const reports$ = this.reportSrv.getReports().subscribe( reports =>{
+      this.reports = reports;
+    })
   }
 
 }

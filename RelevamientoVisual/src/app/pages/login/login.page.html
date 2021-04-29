@@ -1,10 +1,13 @@
 <ion-content>
-  <div style="display: flex; flex-direction: column; padding: 0 10px 0 10px">
+  <div class="container">
     <img
-      src="../../../assets/iconapp.svg"
+      src="../../../assets/svg-icon-relevvisual.png"
       alt=""
-      style="width: 200px; align-self: center"
     />
+    <div>
+      <p>INGRESA A</p>
+      <p>RELEVAMIENTO VISUAL</p>
+    </div>
     <form [formGroup]="loginForm">
       <div class="wrap-input">
         <input
@@ -13,14 +16,14 @@
           required
           size=""
           name="email"
-          placeholder="Email"
+          placeholder="Correo electronico"
         />
       </div>
       <ion-row class="hiddenItems">
         <small
           *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)"
           style="color: var(--ion-color-danger)"
-          >Por favor, ingrese su email.</small
+          >Por favor, ingrese su correo.</small
         >
         <small
           *ngIf="loginForm.get('email').hasError('email')"
@@ -68,15 +71,28 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-button (click)="testUser(1)" color="success" expand="block">
+          <ion-button (click)="testUser(1)" color="success" expand="block" size="small">
             Test User 1
           </ion-button>
         </ion-col>
-      </ion-row>
-      <ion-row>
         <ion-col>
-          <ion-button (click)="testUser(2)" color="warning" expand="block">
+          <ion-button (click)="testUser(2)" color="medium" expand="block" size="small">
             Test User 2
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button (click)="testUser(3)" color="warning" expand="block" size="small">
+            Test User 3
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button (click)="testUser(4)" color="danger" expand="block" size="small">
+            Test User 4
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button (click)="testUser(5)" color="light" expand="block" size="small">
+            Test User 5
           </ion-button>
         </ion-col>
       </ion-row>
