@@ -1,51 +1,52 @@
-
+<ion-toolbar *ngIf="!showSpinner">
+  <ion-segment color="dark" [(ngModel)]="selected">
+    <ion-segment-button value="todos" (click)="MostrarTodo()">
+      <ion-label>Todos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="misreportes" (click)="MostrarMisReportes()">
+      <ion-label>Mis reportes</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
 <ion-content>
-  <ion-card *ngFor="let item of reports">
-    <img class="type-report"  [src]=" item.type == 1 ? '../../../assets/images/thumb-up-svg.svg' : '../../../assets/images/thumb-down-svg.svg'" alt="">
-    <img [src]="item.url" />
-    <ion-card-header>
-      <ion-card-subtitle>{{item.fecha}}</ion-card-subtitle>
-      <ion-card-title>A {{item.name}} {{item.type == 1 ? 'le gusto.' : 'no le gusto.'}}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-row>
-        <ion-col>
-          
-          <img src="../../../assets/images/thumb-up-svg.svg" alt="">
-          <small>Me gusta</small>
-          <ion-badge color="primary">{{item.likes}}</ion-badge>
-        </ion-col>
-          <ion-col>
-            <img src="../../../assets/images/thumb-down-svg.svg" alt="">
-            <small>No me gusta</small>
-            <ion-badge color="primary">{{item.dislikes}}</ion-badge>
+  <img
+    *ngIf="showSpinner"
+    src="../../../assets/rv-spinner.gif "
+    alt=""
+    style="display: flex; margin: 0 auto; margin-top: 50%;"
+  />
+  <div *ngIf="!showSpinner">
+    <ion-card *ngFor="let item of displayReports">
+      <img
+        class="type-report"
+        [src]=" item.type == 1 ? '../../../assets/images/thumb-up-svg.svg' : '../../../assets/images/thumb-down-svg.svg'"
+        alt=""
+      />
+      <img [src]="item.url" />
+      <ion-card-header>
+        <ion-card-subtitle
+          >{{item.fecha | date:'dd/MM hh:mm a'}}</ion-card-subtitle
+        >
+        <ion-card-title
+          >A {{item.name}} {{item.type == 1 ? 'le gusto.' : 'no le
+          gusto.'}}</ion-card-title
+        >
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col
+            (click)=" !item.hasVoted ? saveLike(item.doc_id,item.reaccion.likes) : false"
+          >
+            <img
+              src="../../../assets/images/thumb-up-svg.svg"
+              alt=""
+              [ngClass]="{'disabledIcon': !item.hasVoted}"
+            />
+            <small>Me gusta</small>
+            <ion-badge color="primary">{{item.reaccion.likes}}</ion-badge>
           </ion-col>
-          
-      </ion-row>
-    </ion-card-content>
-  </ion-card>
- <!--  <ion-card>
-    <img class="type-report"  src="../../../assets/images/thumb-down-svg.svg" alt="">
-    <img src="../../../assets/images/puerta-rota.jpeg" />
-    <ion-card-header>
-      <ion-card-subtitle>23/03/2021</ion-card-subtitle>
-      <ion-card-title>A Juan no le gusto</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-row>
-        <ion-col>
-          
-          <img src="../../../assets/images/thumb-up-svg.svg" alt="">
-          <small>Me gusta</small>
-          <ion-badge color="primary">2</ion-badge>
-        </ion-col>
-          <ion-col>
-            <img src="../../../assets/images/thumb-down-svg.svg" alt="">
-            <small>No me gusta</small>
-            <ion-badge color="primary">12</ion-badge>
-          </ion-col>
-          
-      </ion-row>
-    </ion-card-content>
-  </ion-card> -->
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

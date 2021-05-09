@@ -3,7 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CameraService } from 'src/app/services/camera/camera.service';
 import { UploadService } from 'src/app/services/upload/upload.service';
 import { User } from 'src/app/shared/clases/user';
-import { Tipo } from 'src/app/shared/enum/Tipo';
+import { eTipo } from 'src/app/shared/enum/eTipo';
 
 @Component({
   selector: 'app-report',
@@ -28,7 +28,7 @@ export class ReportPage implements OnInit {
     })
   }
 
-  tomarImagen(tipo: Tipo){
+  tomarImagen(tipo: eTipo){
     this.cameraSrv
     .OpenCamera()
     .then((data) => {
@@ -44,10 +44,14 @@ export class ReportPage implements OnInit {
 
 
 
-  subirReporte(type: Tipo){
+  subirReporte(type: eTipo){
     //subo img
     this.uploadSrv.loadToStorage(this.foto,this.userName,type);
     //guardo con referencia de img 
+  }
+
+  logout(){
+    this.authSrv.SignOut();
   }
 
 }

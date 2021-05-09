@@ -8,8 +8,9 @@ import {
   AngularFireStorage,
   AngularFireUploadTask,
 } from "@angular/fire/storage";
-import { Tipo } from "src/app/shared/enum/Tipo";
+import { eTipo } from "src/app/shared/enum/eTipo";
 import { storage } from "firebase";
+import { ReaccionesService } from "../reacciones/reacciones.service";
 
 @Injectable({
   providedIn: "root",
@@ -23,14 +24,15 @@ export class UploadService {
   constructor(
     private db: AngularFirestore,
     private authService: AuthService,
-    private fStorage: AngularFireStorage
+    private fStorage: AngularFireStorage,
+    private reaccionSrv: ReaccionesService
   ) {
     this.dbRef = this.db.collection("reportes");
     const user$ = this.authService.getCurrentUserId().subscribe((data) => {
       this.currentUid = data.uid;
     });
   }
-  public loadToStorage(file: string, fullname: string, type: Tipo) {
+  public loadToStorage(file: string, fullname: string, type: eTipo) {
     this.timeStamp = new Date().getTime();
     this.fullName = fullname;
     this.newName = `${this.fullName + this.timeStamp}.jpeg`;
@@ -57,13 +59,12 @@ export class UploadService {
             uid: this.currentUid,
             fecha: Date.now(),
             name: this.fullName,
-            likes: 0,
-            dislikes: 0,
             url: data,
-            type: type
+            type: type 
           })
           .then((data) => {
-            return true;
+            this.reaccionSrv.createReaccion(data.id);
+            return true; 
           })
           .catch((err) => {
             return err;
